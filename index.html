@@ -8,7 +8,7 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts: Lexend & Fredoka for friendly elementary UI -->
+  <!-- Google Fonts: Lexend & Fredoka -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -35,57 +35,38 @@
   </script>
 
   <style>
-    body {
-      font-family: 'Lexend', sans-serif;
-    }
-    .font-display {
-      font-family: 'Fredoka', sans-serif;
-    }
+    body { font-family: 'Lexend', sans-serif; }
+    .font-display { font-family: 'Fredoka', sans-serif; }
     @keyframes pulse-alarm {
       0%, 100% { background-color: #ef4444; color: #ffffff; }
       50% { background-color: #f87171; color: #ffffff; }
     }
-    .alarm-active {
-      animation: pulse-alarm 1.2s infinite ease-in-out;
-    }
-    /* Custom scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
+    .alarm-active { animation: pulse-alarm 1.2s infinite ease-in-out; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
   </style>
 </head>
 <body class="h-full text-slate-800 flex flex-col bg-slate-100 antialiased selection:bg-purple-200">
 
-  <!-- TOP HEADER & REAL-TIME DASHBOARD CONTROL -->
+  <!-- TOP HEADER -->
   <header id="topHeader" class="bg-slate-900 text-white shadow-lg border-b border-slate-800 sticky top-0 z-40 transition-colors duration-500">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+    <div class="layout-container max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4 transition-all duration-300">
       
       <!-- Brand & Active Class Title -->
       <div class="flex items-center gap-3">
-        <div class="p-2.5 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-2xl text-2xl shadow-md">
-          🎨
-        </div>
+        <div class="p-2.5 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-2xl text-2xl shadow-md">🎨</div>
         <div>
           <div class="flex items-center gap-2">
             <h1 class="text-xl font-extrabold font-display tracking-wide text-white">Art Launchpad</h1>
-            <span id="autoScheduleBadge" class="text-[10px] uppercase font-extrabold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Auto Schedule: ON</span>
+            <span id="autoScheduleBadge" class="text-[10px] uppercase font-extrabold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30">Auto: ON</span>
           </div>
           <p id="classTimeRangeText" class="text-xs text-slate-400 font-medium">Schedule: Loading class schedule...</p>
         </div>
       </div>
 
-      <!-- Real-Time Clock & Voice Level Badge -->
+      <!-- Real-Time Clock -->
       <div class="flex items-center gap-3">
-        
-        <!-- Live Clock -->
         <div class="bg-slate-800/90 border border-slate-700/80 px-3.5 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner">
           <span class="text-amber-400 text-sm">🕒</span>
           <div>
@@ -93,202 +74,123 @@
             <div id="todayDate" class="text-[10px] text-slate-400 uppercase font-semibold">Today</div>
           </div>
         </div>
-
-        <!-- Voice Level Banner Indicator -->
-        <div class="bg-slate-800/90 border border-slate-700/80 px-3.5 py-1.5 rounded-2xl flex items-center gap-2">
-          <span class="text-lg">🤫</span>
-          <div>
-            <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Target Voice Level</div>
-            <div id="activeVoiceDisplay" class="text-xs font-black text-emerald-400 uppercase tracking-wide">Level 0: Silence</div>
-          </div>
-        </div>
-
       </div>
 
-      <!-- Grade Selector Dropdown & Auto-Schedule Toggle -->
+      <!-- Controls: Grade Selector, Auto Toggle, Widescreen Toggle -->
       <div class="flex items-center gap-2">
-        <label for="gradeSelect" class="text-xs font-bold text-slate-300 hidden sm:inline">Select Grade:</label>
         <select id="gradeSelect" onchange="handleManualGradeChange(this.value)" class="bg-slate-800 text-white font-bold text-sm px-3 py-2 rounded-xl border border-slate-700 focus:ring-2 focus:ring-amber-400 focus:outline-none transition cursor-pointer">
-          <option value="5th">5th Grade (8:30 - 9:20)</option>
-          <option value="3rd">3rd Grade (9:30 - 10:20)</option>
-          <option value="4th">4th Grade (10:30 - 11:20)</option>
-          <option value="K">Kindergarten (12:05 - 12:55)</option>
-          <option value="1st">1st Grade (1:00 - 1:50)</option>
-          <option value="2nd">2nd Grade (2:00 - 2:50)</option>
+          <option value="5th">5th (8:30 - 9:20)</option>
+          <option value="3rd">3rd (9:30 - 10:20)</option>
+          <option value="4th">4th (10:30 - 11:20)</option>
+          <option value="K">Kinder (12:05 - 12:55)</option>
+          <option value="1st">1st (1:00 - 1:50)</option>
+          <option value="2nd">2nd (2:00 - 2:50)</option>
         </select>
-
-        <button id="toggleAutoBtn" onclick="toggleAutoSchedule()" title="Toggle Auto Clock Transition" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-sm">
-          <span>🔄 Auto</span>
+        <button id="toggleAutoBtn" onclick="toggleAutoSchedule()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition shadow-sm">
+          🔄 Auto
+        </button>
+        <button onclick="toggleWidescreen()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition shadow-sm">
+          ↔️ Widescreen
         </button>
       </div>
-
     </div>
   </header>
 
-  <!-- ALERT / LINE-UP HIGH VISIBILITY BANNER -->
+  <!-- VOICE LEVEL BAR (BLACK) -->
+  <div class="bg-black text-white border-b border-slate-800 relative z-30 shadow-md">
+    <div class="layout-container max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center gap-4 transition-all duration-300">
+      <div class="flex items-center gap-2 min-w-max">
+        <span class="text-xl">📢</span>
+        <h2 class="font-bold font-display text-white text-base tracking-wider uppercase">Voice Level Expectations:</h2>
+      </div>
+      
+      <div class="grid grid-cols-4 gap-2 w-full max-w-3xl">
+        <button onclick="setVoiceLevel(0)" id="voiceBtn0" class="voice-btn p-2 rounded-xl border border-slate-700 bg-slate-900 flex flex-col items-center justify-center transition text-center hover:border-emerald-400">
+          <span class="text-lg">🤫</span>
+          <span class="text-xs font-extrabold mt-1">Level 0</span>
+        </button>
+        <button onclick="setVoiceLevel(1)" id="voiceBtn1" class="voice-btn p-2 rounded-xl border border-slate-700 bg-slate-900 flex flex-col items-center justify-center transition text-center hover:border-blue-400">
+          <span class="text-lg">💬</span>
+          <span class="text-xs font-extrabold mt-1">Level 1</span>
+        </button>
+        <button onclick="setVoiceLevel(2)" id="voiceBtn2" class="voice-btn p-2 rounded-xl border border-slate-700 bg-slate-900 flex flex-col items-center justify-center transition text-center hover:border-amber-400">
+          <span class="text-lg">🗣️</span>
+          <span class="text-xs font-extrabold mt-1">Level 2</span>
+        </button>
+        <button onclick="setVoiceLevel(3)" id="voiceBtn3" class="voice-btn p-2 rounded-xl border border-slate-700 bg-slate-900 flex flex-col items-center justify-center transition text-center hover:border-rose-400">
+          <span class="text-lg">📢</span>
+          <span class="text-xs font-extrabold mt-1">Level 3</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HORIZONTAL "I CAN" STATEMENT -->
+  <div class="bg-gradient-to-r from-amber-100 to-orange-50 border-b-2 border-amber-200/80 shadow-sm relative z-20">
+    <div class="layout-container max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center gap-3 transition-all duration-300">
+      <div class="flex items-center gap-2 text-amber-900 font-black text-sm uppercase tracking-wider whitespace-nowrap">
+        <span>✨</span> "I Can" Statement:
+      </div>
+      <textarea id="iCanInput" rows="1" oninput="saveCurrentGradeData()" class="w-full bg-white/50 border border-amber-200/50 rounded-xl px-3 py-2 font-display font-bold text-slate-900 text-lg md:text-xl focus:ring-2 focus:ring-amber-400 focus:outline-none transition resize-none" placeholder="I can create depth using perspective!"></textarea>
+    </div>
+  </div>
+
+  <!-- ALERT BANNER -->
   <div id="lineUpAlertBanner" class="hidden bg-rose-600 text-white px-4 py-2.5 text-center font-black tracking-wide text-base shadow-inner flex items-center justify-center gap-3">
     <span class="text-2xl animate-bounce">🔔</span>
     <span id="lineUpBannerText" class="uppercase">1 MINUTE WARNING: CLEAN UP COMPLETE & LINE UP AT VOICE LEVEL 0!</span>
     <button onclick="dismissLineUpBanner()" class="bg-white/20 hover:bg-white/30 text-white font-bold text-xs px-2.5 py-1 rounded-lg transition">Dismiss</button>
   </div>
 
-  <!-- GRADE TABS BAR FOR EASY SMARTBOARD TAPPING -->
+  <!-- GRADE TABS BAR -->
   <div class="bg-white border-b border-slate-200 shadow-sm overflow-x-auto">
-    <div class="max-w-7xl mx-auto px-4 flex items-center space-x-2 py-2">
-      <button onclick="handleManualGradeChange('5th')" id="tab-5th" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">5th Grade</button>
-      <button onclick="handleManualGradeChange('3rd')" id="tab-3rd" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">3rd Grade</button>
-      <button onclick="handleManualGradeChange('4th')" id="tab-4th" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">4th Grade</button>
-      <button onclick="handleManualGradeChange('K')" id="tab-K" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">Kindergarten</button>
-      <button onclick="handleManualGradeChange('1st')" id="tab-1st" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">1st Grade</button>
-      <button onclick="handleManualGradeChange('2nd')" id="tab-2nd" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200">2nd Grade</button>
+    <div class="layout-container max-w-7xl mx-auto px-4 flex items-center space-x-2 py-2 transition-all duration-300">
+      <button onclick="handleManualGradeChange('5th')" id="tab-5th" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200">5th Grade</button>
+      <button onclick="handleManualGradeChange('3rd')" id="tab-3rd" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200">3rd Grade</button>
+      <button onclick="handleManualGradeChange('4th')" id="tab-4th" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200">4th Grade</button>
+      <button onclick="handleManualGradeChange('K')" id="tab-K" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200">Kindergarten</button>
+      <button onclick="handleManualGradeChange('1st')" id="tab-1st" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200">1st Grade</button>
+      <button onclick="handleManualGradeChange('2nd')" id="tab-2nd" class="grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200">2nd Grade</button>
       
       <div class="ml-auto flex items-center gap-2">
-        <button onclick="openNamePicker()" class="bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold text-xs px-3 py-2 rounded-xl border border-purple-200 transition flex items-center gap-1.5 shadow-sm">
-          <span>🎯 Name Picker</span>
-        </button>
+        <button onclick="openNamePicker()" class="bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold text-xs px-3 py-2 rounded-xl border border-purple-200 transition shadow-sm">🎯 Name Picker</button>
       </div>
     </div>
   </div>
 
   <!-- MAIN LESSON LAUNCHPAD BODY -->
-  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <main class="layout-container max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 transition-all duration-300 flex-1">
 
-    <!-- LEFT COLUMN: VOICE LEVEL & TIMERS (5 COLS) -->
+    <!-- LEFT COLUMN: TIMERS & VISUALS (5 COLS) -->
     <div class="lg:col-span-5 space-y-6">
-
-      <!-- VOICE LEVEL SELECTOR CARD -->
-      <div class="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-          <div class="flex items-center gap-2">
-            <span class="p-2 bg-amber-100 text-amber-700 rounded-xl text-lg">📢</span>
-            <h2 class="font-bold font-display text-slate-800 text-lg">Voice Level Expectations</h2>
-          </div>
-          <span class="text-[11px] font-bold text-slate-400 uppercase">Interactive</span>
-        </div>
-
-        <div class="grid grid-cols-4 gap-2">
-          <!-- Level 0 -->
-          <button onclick="setVoiceLevel(0)" id="voiceBtn0" class="voice-btn p-2.5 rounded-2xl border-2 border-slate-200 flex flex-col items-center justify-center transition text-center hover:border-emerald-400">
-            <span class="text-xl">🤫</span>
-            <span class="text-xs font-extrabold mt-1">Level 0</span>
-            <span class="text-[10px] font-medium text-slate-500">Silence</span>
-          </button>
-
-          <!-- Level 1 -->
-          <button onclick="setVoiceLevel(1)" id="voiceBtn1" class="voice-btn p-2.5 rounded-2xl border-2 border-slate-200 flex flex-col items-center justify-center transition text-center hover:border-blue-400">
-            <span class="text-xl">💬</span>
-            <span class="text-xs font-extrabold mt-1">Level 1</span>
-            <span class="text-[10px] font-medium text-slate-500">Whisper</span>
-          </button>
-
-          <!-- Level 2 -->
-          <button onclick="setVoiceLevel(2)" id="voiceBtn2" class="voice-btn p-2.5 rounded-2xl border-2 border-slate-200 flex flex-col items-center justify-center transition text-center hover:border-amber-400">
-            <span class="text-xl">🗣️</span>
-            <span class="text-xs font-extrabold mt-1">Level 2</span>
-            <span class="text-[10px] font-medium text-slate-500">Table Talk</span>
-          </button>
-
-          <!-- Level 3 -->
-          <button onclick="setVoiceLevel(3)" id="voiceBtn3" class="voice-btn p-2.5 rounded-2xl border-2 border-slate-200 flex flex-col items-center justify-center transition text-center hover:border-rose-400">
-            <span class="text-xl">📢</span>
-            <span class="text-xs font-extrabold mt-1">Level 3</span>
-            <span class="text-[10px] font-medium text-slate-500">Presenter</span>
-          </button>
-        </div>
-      </div>
 
       <!-- MASTER MULTI-TIMER ENGINE -->
       <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-5">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <div class="flex items-center gap-2">
             <span class="p-2 bg-purple-100 text-purple-700 rounded-xl text-xl">⏳</span>
-            <div>
-              <h2 class="font-bold font-display text-slate-800 text-lg">Classroom Countdown Timer</h2>
-              <p class="text-xs text-slate-500">Select warm-up, demo, studio work, or clean-up</p>
-            </div>
+            <h2 class="font-bold font-display text-slate-800 text-lg">Classroom Timer</h2>
           </div>
         </div>
-
-        <!-- Timer Preset Selector Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <button onclick="selectTimerPreset('warmup')" id="presetWarmup" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 transition bg-slate-50 text-slate-700 hover:bg-slate-100">
-            🔥 Warm-Up<br><span class="text-[10px] font-normal text-slate-500">(5 min)</span>
-          </button>
-          <button onclick="selectTimerPreset('demo')" id="presetDemo" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 transition bg-slate-50 text-slate-700 hover:bg-slate-100">
-            🎨 Teacher Demo<br><span class="text-[10px] font-normal text-slate-500">(7 min)</span>
-          </button>
-          <button onclick="selectTimerPreset('studio')" id="presetStudio" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 transition bg-slate-50 text-slate-700 hover:bg-slate-100">
-            🖌️ Studio Time<br><span class="text-[10px] font-normal text-slate-500">(25 min)</span>
-          </button>
-          <button onclick="selectTimerPreset('cleanup')" id="presetCleanup" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 transition bg-slate-50 text-slate-700 hover:bg-slate-100">
-            🧹 Clean-Up<br><span class="text-[10px] font-normal text-slate-500">(5 min)</span>
-          </button>
+          <button onclick="selectTimerPreset('warmup')" id="presetWarmup" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100">🔥 Warm-Up<br><span class="text-[10px] font-normal">(5m)</span></button>
+          <button onclick="selectTimerPreset('demo')" id="presetDemo" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100">🎨 Demo<br><span class="text-[10px] font-normal">(7m)</span></button>
+          <button onclick="selectTimerPreset('studio')" id="presetStudio" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100">🖌️ Studio<br><span class="text-[10px] font-normal">(25m)</span></button>
+          <button onclick="selectTimerPreset('cleanup')" id="presetCleanup" class="timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100">🧹 Clean-Up<br><span class="text-[10px] font-normal">(5m)</span></button>
         </div>
-
-        <!-- BIG DISPLAY TIMER -->
-        <div class="bg-slate-900 rounded-2xl p-6 text-center text-white border-4 border-slate-800 shadow-inner relative overflow-hidden">
+        <div class="bg-slate-900 rounded-2xl p-6 text-center text-white border-4 border-slate-800 shadow-inner relative">
           <div id="activeTimerName" class="text-xs font-bold text-amber-400 uppercase tracking-widest mb-1">Warm-Up Timer</div>
-          
-          <div id="timerDisplay" class="text-6xl sm:text-7xl font-extrabold font-mono tracking-wider my-2 text-white">
-            05:00
-          </div>
-
-          <!-- Adjust Time Controls -->
+          <div id="timerDisplay" class="text-6xl sm:text-7xl font-extrabold font-mono tracking-wider my-2 text-white">05:00</div>
           <div class="flex justify-center items-center gap-2 mt-3 text-xs font-semibold text-slate-400">
-            <button onclick="adjustTimer(-60)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg border border-slate-700 transition">-1 Min</button>
-            <button onclick="adjustTimer(-10)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg border border-slate-700 transition">-10 Sec</button>
-            <button onclick="adjustTimer(10)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg border border-slate-700 transition">+10 Sec</button>
-            <button onclick="adjustTimer(60)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg border border-slate-700 transition">+1 Min</button>
+            <button onclick="adjustTimer(-60)" class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">-1 Min</button>
+            <button onclick="adjustTimer(-10)" class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">-10 Sec</button>
+            <button onclick="adjustTimer(10)" class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">+10 Sec</button>
+            <button onclick="adjustTimer(60)" class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">+1 Min</button>
           </div>
         </div>
-
-        <!-- TIMER PLAYBACK BUTTONS -->
         <div class="flex items-center gap-3">
-          <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md transition flex items-center justify-center gap-2">
-            <span>▶️ Start Timer</span>
-          </button>
-          <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-2xl text-base transition">
-            🔄 Reset
-          </button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- RIGHT COLUMN: LESSON CONTENT, EMBEDDED ARTWORK & REQUIREMENTS (7 COLS) -->
-    <div class="lg:col-span-7 space-y-6">
-
-      <!-- Texas TEKS Alignment & "I Can" Statements -->
-      <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-4 relative">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-          <div class="flex items-center gap-2">
-            <span class="p-2 bg-amber-100 text-amber-700 rounded-xl text-xl">⭐️</span>
-            <div>
-              <h2 class="font-bold font-display text-slate-800 text-lg">Texas TEKS & Daily Learning Target</h2>
-              <p class="text-xs text-slate-500">Texas Essential Knowledge and Skills (Art Standards)</p>
-            </div>
-          </div>
-          <span class="text-xs bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-lg">Texas TEKS</span>
-        </div>
-
-        <!-- TEKS Editable Field -->
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider">TEKS Standard Alignment</label>
-          <input type="text" id="teksInput" oninput="saveCurrentGradeData()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold text-slate-700 focus:ring-2 focus:ring-amber-400 focus:outline-none transition" placeholder="e.g., TEKS 117.117.b(1) Perception & (2) Creative Expression...">
-        </div>
-
-        <!-- "I Can" Statement Banner -->
-        <div class="p-4 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200/80 rounded-2xl space-y-2">
-          <div class="flex items-center gap-2 text-amber-800 font-black text-xs uppercase tracking-wider">
-            <span>✨</span> "I Can" Statement
-          </div>
-          <textarea id="iCanInput" rows="2" oninput="saveCurrentGradeData()" class="w-full bg-transparent border-0 font-display font-bold text-slate-800 text-base sm:text-lg focus:ring-0 focus:outline-none transition resize-none p-0" placeholder="I can create depth using perspective!"></textarea>
-        </div>
-
-        <!-- Lesson Objective & Steps -->
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider">Today's Objective & Steps</label>
-          <textarea id="objectiveInput" rows="2" oninput="saveCurrentGradeData()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-800 font-medium focus:ring-2 focus:ring-amber-400 focus:outline-none transition resize-none" placeholder="1. Pencil sketch outline 2. Paint color wash 3. Add details"></textarea>
+          <button id="startTimerBtn" onclick="toggleTimer()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md transition flex items-center justify-center gap-2"><span>▶️ Start Timer</span></button>
+          <button onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 px-4 rounded-2xl text-base transition">🔄 Reset</button>
         </div>
       </div>
 
@@ -297,41 +199,58 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
           <div class="flex items-center gap-2">
             <span class="p-2 bg-purple-100 text-purple-700 rounded-xl text-xl">🖼️</span>
-            <div>
-              <h3 class="font-bold font-display text-slate-800 text-lg">Embedded Artworks & Step Visuals</h3>
-              <p class="text-xs text-slate-500">Project exemplars, art history slides, or step-by-step photos</p>
-            </div>
+            <h3 class="font-bold font-display text-slate-800 text-lg">Embedded Visuals</h3>
           </div>
-
-          <!-- Add Image Controls -->
           <div class="flex items-center gap-2">
-            <!-- Upload Local File -->
-            <label title="Upload photo file from computer or tablet" class="cursor-pointer bg-purple-50 hover:bg-purple-100 text-purple-700 font-bold text-xs px-3 py-2 rounded-xl border border-purple-200 transition flex items-center gap-1.5 shadow-sm">
-              <span>📁 Upload File</span>
-              <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageFileUpload(event)" class="hidden">
+            <label class="cursor-pointer bg-purple-50 text-purple-700 font-bold text-xs px-2 py-1.5 rounded-xl border border-purple-200 shadow-sm hover:bg-purple-100">
+              📁 File <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageFileUpload(event)" class="hidden">
             </label>
-
-            <!-- Add Web Image URL -->
-            <button onclick="promptAddImageUrl()" title="Embed image from web URL" class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-3 py-2 rounded-xl shadow transition flex items-center gap-1">
-              <span>🔗 Add Web URL</span>
-            </button>
+            <button onclick="promptAddImageUrl()" class="bg-purple-600 text-white font-bold text-xs px-2 py-1.5 rounded-xl shadow hover:bg-purple-700">🔗 URL</button>
           </div>
         </div>
-
-        <!-- Drag & Drop Upload Overlay / Dropzone -->
-        <div id="dropZone" class="border-2 border-dashed border-slate-300 hover:border-purple-400 rounded-2xl p-4 text-center transition bg-slate-50/50 flex flex-col items-center justify-center gap-1 cursor-pointer" onclick="document.getElementById('imageFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <div id="dropZone" class="border-2 border-dashed border-slate-300 rounded-2xl p-4 text-center bg-slate-50/50 cursor-pointer" onclick="document.getElementById('imageFileInput').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
           <span class="text-xl">📸</span>
-          <p class="text-xs font-bold text-slate-600">Drag & drop photos here, or click to browse</p>
-          <p class="text-[10px] text-slate-400">Supports PNG, JPG, WEBP, GIF</p>
+          <p class="text-xs font-bold text-slate-600">Drag & drop photos here</p>
         </div>
-
-        <!-- Image Cards Grid -->
-        <div id="imageGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-          <!-- Dynamic Image Cards Rendered Here -->
-        </div>
+        <div id="imageGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2"></div>
       </div>
 
-      <!-- MATERIALS NEEDED & CLEAN-UP CHECKLISTS -->
+    </div>
+
+    <!-- RIGHT COLUMN: TEKS, OBJECTIVES, MATERIALS & NEXT TIME (7 COLS) -->
+    <div class="lg:col-span-7 space-y-6">
+
+      <!-- TEKS Alignment -->
+      <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-3 relative">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="p-2 bg-amber-100 text-amber-700 rounded-xl text-xl">⭐️</span>
+            <h2 class="font-bold font-display text-slate-800 text-lg">Texas TEKS</h2>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="adjustFontSize('teksInput', -2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A-</button>
+            <button onclick="adjustFontSize('teksInput', 2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A+</button>
+          </div>
+        </div>
+        <textarea id="teksInput" style="font-size: 14px;" rows="2" oninput="saveCurrentGradeData()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl font-semibold text-slate-700 focus:ring-2 focus:ring-amber-400 focus:outline-none transition resize-none" placeholder="e.g., TEKS 117.117.b(1)..."></textarea>
+      </div>
+
+      <!-- What needs to be done today -->
+      <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-200 space-y-3 relative">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="p-2 bg-blue-100 text-blue-700 rounded-xl text-xl">✅</span>
+            <h2 class="font-bold font-display text-slate-800 text-lg">What Needs to be Done Today</h2>
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="adjustFontSize('objectiveInput', -2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A-</button>
+            <button onclick="adjustFontSize('objectiveInput', 2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A+</button>
+          </div>
+        </div>
+        <textarea id="objectiveInput" style="font-size: 16px;" rows="4" oninput="saveCurrentGradeData()" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none transition resize-none" placeholder="1. Pencil sketch outline 2. Paint color wash 3. Add details"></textarea>
+      </div>
+
+      <!-- MATERIALS & WHAT TO EXPECT NEXT TIME -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
         <!-- Materials Checklist -->
@@ -341,27 +260,18 @@
               <span class="p-1.5 bg-blue-100 text-blue-700 rounded-lg text-lg">✏️</span>
               <h3 class="font-bold font-display text-slate-800 text-base">Materials Needed</h3>
             </div>
-            <button onclick="addMaterialPrompt()" class="text-xs bg-blue-50 text-blue-700 font-bold px-2 py-1 rounded-lg hover:bg-blue-100 transition">+ Add Item</button>
+            <button onclick="addMaterialPrompt()" class="text-xs bg-blue-50 text-blue-700 font-bold px-2 py-1 rounded-lg hover:bg-blue-100">+ Add Item</button>
           </div>
-
-          <div id="materialsList" class="space-y-2">
-            <!-- Dynamic Material Items -->
-          </div>
+          <div id="materialsList" class="space-y-2"></div>
         </div>
 
-        <!-- Clean-Up Requirements -->
-        <div class="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-            <div class="flex items-center gap-2">
-              <span class="p-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-lg">🧹</span>
-              <h3 class="font-bold font-display text-slate-800 text-base">Clean-Up Rules</h3>
-            </div>
-            <button onclick="addCleanupPrompt()" class="text-xs bg-emerald-50 text-emerald-700 font-bold px-2 py-1 rounded-lg hover:bg-emerald-100 transition">+ Add Rule</button>
+        <!-- What to expect next time -->
+        <div class="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-3 flex flex-col">
+          <div class="flex items-center gap-2 border-b border-slate-100 pb-2">
+            <span class="p-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-lg">🔮</span>
+            <h3 class="font-bold font-display text-slate-800 text-base">What to Expect Next Time</h3>
           </div>
-
-          <div id="cleanupList" class="space-y-2">
-            <!-- Dynamic Clean-Up Items -->
-          </div>
+          <textarea id="nextTimeInput" oninput="saveCurrentGradeData()" class="w-full flex-1 p-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-emerald-400 focus:outline-none transition resize-none" placeholder="Next week, we will outline our dried paintings with black ink..."></textarea>
         </div>
 
       </div>
@@ -370,78 +280,43 @@
 
   </main>
 
-  <!-- FULLSCREEN LIGHTBOX MODAL FOR SMARTBOARD PRESENTATIONS -->
-  <div id="lightboxModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6 hidden transition-all duration-300">
-    
-    <!-- Top Modal Bar -->
+  <!-- LIGHTBOX & NAME PICKER MODALS KEEP ORIGINAL STRUCTURE -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-between p-4 hidden transition-all">
     <div class="w-full max-w-6xl flex items-center justify-between text-white">
       <div class="flex items-center gap-3">
         <span class="text-2xl">🖼️</span>
         <div>
           <div id="lightboxGradeTitle" class="text-sm font-bold text-amber-400">Artwork Presentation View</div>
-          <div id="lightboxCaption" class="text-lg font-bold font-display">Step 1: Pencil Outline</div>
+          <div id="lightboxCaption" class="text-lg font-bold font-display">Step 1</div>
         </div>
       </div>
-      <button onclick="closeLightbox()" class="bg-white/20 hover:bg-white/40 text-white font-bold px-4 py-2 rounded-2xl backdrop-blur-md transition text-sm flex items-center gap-2">
-        ✕ Exit Presentation
-      </button>
+      <button onclick="closeLightbox()" class="bg-white/20 hover:bg-white/40 text-white font-bold px-4 py-2 rounded-2xl transition">✕ Exit</button>
     </div>
-
-    <!-- Main Image Display Container -->
     <div class="relative w-full max-w-5xl flex-1 flex items-center justify-center my-4 overflow-hidden">
-      <!-- Previous Button -->
-      <button onclick="prevLightboxImage()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white font-bold p-3 rounded-full backdrop-blur-md transition text-xl border border-white/20 z-10">
-        ◀
-      </button>
-
-      <img id="lightboxImage" src="" alt="Full Screen Visual Reference" class="max-h-[75vh] w-auto max-w-full rounded-2xl shadow-2xl object-contain border-4 border-white/20">
-
-      <!-- Next Button -->
-      <button onclick="nextLightboxImage()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white font-bold p-3 rounded-full backdrop-blur-md transition text-xl border border-white/20 z-10">
-        ▶
-      </button>
-    </div>
-
-    <!-- Bottom Indicator -->
-    <div class="text-xs text-slate-400 font-semibold">
-      Use Left/Right Arrow keys or On-screen buttons to cycle through pictures
+      <button onclick="prevLightboxImage()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white font-bold p-3 rounded-full z-10 border border-white/20">◀</button>
+      <img id="lightboxImage" src="" class="max-h-[75vh] w-auto max-w-full rounded-2xl shadow-2xl object-contain border-4 border-white/20">
+      <button onclick="nextLightboxImage()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white font-bold p-3 rounded-full z-10 border border-white/20">▶</button>
     </div>
   </div>
 
-  <!-- RANDOM STUDENT NAME PICKER MODAL -->
   <div id="namePickerModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div class="flex items-center gap-2">
-          <span class="text-2xl">🎯</span>
-          <h3 class="font-bold font-display text-slate-800 text-lg">Random Student Helper Picker</h3>
-        </div>
+        <h3 class="font-bold font-display text-slate-800 text-lg">🎯 Random Student Picker</h3>
         <button onclick="closeNamePicker()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
       </div>
-
-      <div class="space-y-2">
-        <label class="block text-xs font-bold text-slate-600 uppercase">Student Roster (1 per line)</label>
-        <textarea id="rosterInput" rows="5" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold text-slate-700 focus:ring-2 focus:ring-purple-400 focus:outline-none transition resize-none" placeholder="Alex&#10;Jordan&#10;Taylor&#10;Morgan&#10;Sam"></textarea>
-      </div>
-
-      <!-- Pick Display Box -->
+      <textarea id="rosterInput" rows="5" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs font-semibold" placeholder="Alex&#10;Jordan&#10;Taylor"></textarea>
       <div id="selectedNameBox" class="bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-2xl p-6 text-center text-white shadow-lg min-h-[90px] flex items-center justify-center">
-        <span class="text-xl font-display font-bold">Click Pick Student to Start!</span>
+        <span class="text-xl font-display font-bold">Click Pick Student!</span>
       </div>
-
       <div class="flex gap-2">
-        <button onclick="pickRandomStudent()" class="flex-1 bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-2xl transition shadow-md">
-          🎉 Pick Student!
-        </button>
-        <button onclick="closeNamePicker()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-4 py-3 rounded-2xl transition">
-          Done
-        </button>
+        <button onclick="pickRandomStudent()" class="flex-1 bg-purple-600 text-white font-bold py-3 rounded-2xl">🎉 Pick Student!</button>
+        <button onclick="closeNamePicker()" class="bg-slate-200 text-slate-700 font-bold px-4 py-3 rounded-2xl">Done</button>
       </div>
     </div>
   </div>
 
   <script>
-    // TEXAS ELEMENTARY ART CLASS SCHEDULE CONFIGURATION
     const CLASS_SCHEDULE = [
       { id: '5th', title: '5th Grade', start: '08:30', end: '09:20' },
       { id: '3rd', title: '3rd Grade', start: '09:30', end: '10:20' },
@@ -451,141 +326,46 @@
       { id: '2nd', title: '2nd Grade', start: '14:00', end: '14:50' }
     ];
 
-    // DEFAULT LESSON CONTENT & PRESET EMBEDDED IMAGES PER GRADE
     const DEFAULT_GRADE_DATA = {
       '5th': {
-        teks: "TEKS 117.117.b(1) Perception & (2) Creative Expression - Linear perspective and depth.",
-        iCan: "I can create depth using 1-point linear perspective and atmospheric warm/cool colors!",
+        teks: "TEKS 117.117.b(1) Perception & (2) Creative Expression",
+        iCan: "I can create depth using 1-point linear perspective!",
         objective: "1. Draw horizon line & vanishing point. 2. Sketch converging orthogonal lines. 3. Paint warm foreground, cool background.",
-        images: [
-          { url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop", caption: "Exemplar: Atmospheric Landscape Perspective" },
-          { url: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&auto=format&fit=crop", caption: "Step 1: Vanishing Point & Color Wash" }
-        ],
-        materials: [
-          { name: "12x18 Watercolor Paper", checked: false },
-          { name: "Pencils & Rulers", checked: false },
-          { name: "Watercolor Paint & Brushes", checked: false },
-          { name: "Water Cups & Paper Towels", checked: false }
-        ],
-        cleanup: [
-          { name: "Rinse paintbrushes thoroughly until water runs clear", checked: false },
-          { name: "Place damp artwork flat on drying rack", checked: false },
-          { name: "Wipe down table with damp sponge", checked: false }
-        ]
+        nextTime: "We will add sharpie details to our dried paintings.",
+        images: [{ url: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop", caption: "Exemplar: Perspective" }],
+        materials: [{ name: "Watercolor Paper", checked: false }, { name: "Pencils & Rulers", checked: false }]
       },
       '3rd': {
-        teks: "TEKS 117.111.b(2) Creative Expression - Primary & secondary color mixing with patterns.",
-        iCan: "I can mix primary colors to create secondary colors and paint rhythmic line patterns!",
-        objective: "1. Draw 5 overlapping organic shapes. 2. Mix yellow + blue for green wash. 3. Add pattern borders.",
-        images: [
-          { url: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=800&auto=format&fit=crop", caption: "Color Wheel & Organic Shape Pattern Reference" }
-        ],
-        materials: [
-          { name: "Heavyweight Sketch Paper", checked: false },
-          { name: "Primary Paint Colors (Red, Yellow, Blue)", checked: false },
-          { name: "Black Oil Pastels", checked: false }
-        ],
-        cleanup: [
-          { name: "Cap paint palettes securely", checked: false },
-          { name: "Wash brushes bristles-down", checked: false },
-          { name: "Trash paper scraps", checked: false }
-        ]
+        teks: "TEKS 117.111.b(2) Creative Expression",
+        iCan: "I can mix primary colors to create secondary colors!",
+        objective: "1. Draw 5 overlapping organic shapes. 2. Mix yellow + blue for green wash.",
+        nextTime: "We will cut out these shapes to create a collage.",
+        images: [],
+        materials: [{ name: "Sketch Paper", checked: false }, { name: "Paint", checked: false }]
       },
-      '4th': {
-        teks: "TEKS 117.114.b(1) Observation - Integrates value, contrast, and 3D form shading.",
-        iCan: "I can create value shading using graphite pencils to turn 2D shapes into 3D forms!",
-        objective: "1. Practice 5-step value scale. 2. Draw sphere with highlight, midtone, core shadow, and cast shadow.",
-        images: [
-          { url: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop", caption: "Graphite Shading & 3D Form Reference" }
-        ],
-        materials: [
-          { name: "Drawing Pencils (2B, 4B)", checked: false },
-          { name: "Blending Stumps / Tortillons", checked: false },
-          { name: "Kneaded Erasers", checked: false }
-        ],
-        cleanup: [
-          { name: "Return pencils and stumps to table caddy", checked: false },
-          { name: "Brush eraser shavings into trash", checked: false }
-        ]
-      },
-      'K': {
-        teks: "TEKS 117.102.b(1)-(4) Foundations - Basic shapes, scissors safety, collage techniques.",
-        iCan: "I can cut with scissors safely and glue shapes to build a colorful collage robot!",
-        objective: "1. Cut out 3 squares and 2 circles. 2. Arrange robot body. 3. Glue down with glue stick dot-dot-not-a-lot!",
-        images: [
-          { url: "https://images.unsplash.com/photo-1560421683-6856ea585c78?w=800&auto=format&fit=crop", caption: "Paper Shape Collage Robot Example" }
-        ],
-        materials: [
-          { name: "Assorted Construction Paper", checked: false },
-          { name: "Safety Scissors", checked: false },
-          { name: "Glue Sticks", checked: false }
-        ],
-        cleanup: [
-          { name: "Caps tightly on glue sticks (listen for click)", checked: false },
-          { name: "Scissors back in red bin", checked: false },
-          { name: "Recycle paper scraps", checked: false }
-        ]
-      },
-      '1st': {
-        teks: "TEKS 117.105.b(1) Observation - Explores texture, line types (zigzag, wavy), and warm/cool families.",
-        iCan: "I can draw 5 different line types and color them with warm colors!",
-        objective: "1. Draw wavy, zigzag, dotted, looped, and thick lines. 2. Color sections with red, orange, yellow.",
-        images: [
-          { url: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&auto=format&fit=crop", caption: "Warm Color Line Patterns" }
-        ],
-        materials: [
-          { name: "White Drawing Paper", checked: false },
-          { name: "Black Sharpies / Markers", checked: false },
-          { name: "Warm Color Crayons", checked: false }
-        ],
-        cleanup: [
-          { name: "Sharpie caps snapped tight", checked: false },
-          { name: "Crayons sorted back in baskets", checked: false }
-        ]
-      },
-      '2nd': {
-        teks: "TEKS 117.108.b(2) Creative Expression - Constructs 3D sculptures using pinch/coil clay techniques.",
-        iCan: "I can roll a clay coil and pinch a clay pot using score-and-slip connections!",
-        objective: "1. Roll clay ball into pinch pot. 2. Scratch & attach coil rim with slip water.",
-        images: [
-          { url: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&auto=format&fit=crop", caption: "Pinch Pot & Coil Clay Sculpture" }
-        ],
-        materials: [
-          { name: "Air-Dry Clay Portion", checked: false },
-          { name: "Plastic Modeling Tools", checked: false },
-          { name: "Small Slip Water Cups", checked: false }
-        ],
-        cleanup: [
-          { name: "Wipe clay dust off table with damp sponge", checked: false },
-          { name: "Store unfinished clay in sealed plastic bag", checked: false }
-        ]
-      }
+      '4th': { teks: "", iCan: "", objective: "", nextTime: "", images: [], materials: [] },
+      'K': { teks: "", iCan: "", objective: "", nextTime: "", images: [], materials: [] },
+      '1st': { teks: "", iCan: "", objective: "", nextTime: "", images: [], materials: [] },
+      '2nd': { teks: "", iCan: "", objective: "", nextTime: "", images: [], materials: [] }
     };
 
     let gradeData = JSON.parse(localStorage.getItem('artLaunchpadData')) || DEFAULT_GRADE_DATA;
     let currentGrade = '5th';
     let autoScheduleActive = true;
-    let currentVoiceLevel = 0;
+    let isWidescreen = false;
     
     // Timer Variables
     let timerInterval = null;
-    let timerSeconds = 300; // default 5 min
+    let timerSeconds = 300; 
     let timerInitialSeconds = 300;
     let isTimerRunning = false;
-    let activePreset = 'warmup';
-
-    // Lightbox Slideshow State
     let currentLightboxIdx = 0;
 
     window.onload = function() {
-      // Initialize Grade View
       switchGrade(determineActiveGradeByClock() || '5th', false);
-
-      // Start Clock Loop
       updateClock();
       setInterval(updateClock, 1000);
 
-      // Add Keyboard Listeners for Lightbox
       document.addEventListener('keydown', (e) => {
         const modal = document.getElementById('lightboxModal');
         if (!modal.classList.contains('hidden')) {
@@ -596,43 +376,50 @@
       });
     };
 
+    // WIDESCREEN TOGGLE FUNCTION
+    function toggleWidescreen() {
+      isWidescreen = !isWidescreen;
+      const containers = document.querySelectorAll('.layout-container');
+      
+      containers.forEach(el => {
+        if(isWidescreen) {
+          el.classList.remove('max-w-7xl');
+          el.classList.add('w-full');
+        } else {
+          el.classList.add('max-w-7xl');
+          el.classList.remove('w-full');
+        }
+      });
+    }
+
+    // FONT SIZE ADJUSTMENT FUNCTION
+    function adjustFontSize(elementId, delta) {
+      const el = document.getElementById(elementId);
+      const currentSize = parseFloat(window.getComputedStyle(el).fontSize);
+      el.style.fontSize = (currentSize + delta) + 'px';
+      saveCurrentGradeData();
+    }
+
     function updateClock() {
       const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const seconds = now.getSeconds();
-      
       const timeStr = now.toLocaleTimeString('en-US', { hour12: true });
       document.getElementById('liveClock').textContent = timeStr;
-      
-      const options = { weekday: 'short', month: 'short', day: 'numeric' };
-      document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US', options);
+      document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
-      // Check Auto Transition
       if (autoScheduleActive) {
         const activeGrade = determineActiveGradeByClock();
-        if (activeGrade && activeGrade !== currentGrade) {
-          switchGrade(activeGrade, false);
-        }
+        if (activeGrade && activeGrade !== currentGrade) switchGrade(activeGrade, false);
       }
-
-      // Check 1-minute Line-Up Alert Trigger
-      checkLineUpWarning(hours, minutes);
+      checkLineUpWarning(now.getHours(), now.getMinutes());
     }
 
     function determineActiveGradeByClock() {
       const now = new Date();
       const currentMin = now.getHours() * 60 + now.getMinutes();
-
       for (const item of CLASS_SCHEDULE) {
         const [sH, sM] = item.start.split(':').map(Number);
         const [eH, eM] = item.end.split(':').map(Number);
-        const startMin = sH * 60 + sM;
-        const endMin = eH * 60 + eM;
-
-        if (currentMin >= startMin && currentMin < endMin) {
-          return item.id;
-        }
+        if (currentMin >= (sH * 60 + sM) && currentMin < (eH * 60 + eM)) return item.id;
       }
       return null;
     }
@@ -640,31 +427,20 @@
     function checkLineUpWarning(hours, minutes) {
       const currentMin = hours * 60 + minutes;
       let isLineUpTime = false;
-
       for (const item of CLASS_SCHEDULE) {
         const [eH, eM] = item.end.split(':').map(Number);
-        const endMin = eH * 60 + eM;
-        
-        // Exactly 1 minute before class ends
-        if (currentMin === endMin - 1) {
-          isLineUpTime = true;
-          break;
-        }
+        if (currentMin === (eH * 60 + eM) - 1) { isLineUpTime = true; break; }
       }
 
       const alertBanner = document.getElementById('lineUpAlertBanner');
-      if (isLineUpTime) {
-        if (alertBanner.classList.contains('hidden')) {
-          alertBanner.classList.remove('hidden');
-          playChimeSound();
-          setVoiceLevel(0); // Automatically force Voice Level 0
-        }
+      if (isLineUpTime && alertBanner.classList.contains('hidden')) {
+        alertBanner.classList.remove('hidden');
+        playChimeSound();
+        setVoiceLevel(0); 
       }
     }
 
-    function dismissLineUpBanner() {
-      document.getElementById('lineUpAlertBanner').classList.add('hidden');
-    }
+    function dismissLineUpBanner() { document.getElementById('lineUpAlertBanner').classList.add('hidden'); }
 
     function toggleAutoSchedule() {
       autoScheduleActive = !autoScheduleActive;
@@ -672,23 +448,20 @@
       const btn = document.getElementById('toggleAutoBtn');
 
       if (autoScheduleActive) {
-        badge.textContent = "Auto Schedule: ON";
-        badge.className = "text-[10px] uppercase font-extrabold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30";
-        btn.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-sm";
-        // Immediately sync
+        badge.textContent = "Auto: ON";
+        badge.className = "text-[10px] uppercase font-extrabold bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full";
+        btn.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition shadow-sm";
         const active = determineActiveGradeByClock();
         if (active) switchGrade(active, false);
       } else {
-        badge.textContent = "Auto Schedule: MANUAL";
-        badge.className = "text-[10px] uppercase font-extrabold bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30";
-        btn.className = "bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1 shadow-sm";
+        badge.textContent = "Auto: OFF";
+        badge.className = "text-[10px] uppercase font-extrabold bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full";
+        btn.className = "bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs px-3 py-2 rounded-xl transition shadow-sm";
       }
     }
 
     function handleManualGradeChange(gradeId) {
-      if (autoScheduleActive) {
-        toggleAutoSchedule(); // Switch to manual mode if user explicitly picks grade
-      }
+      if (autoScheduleActive) toggleAutoSchedule();
       switchGrade(gradeId, true);
     }
 
@@ -696,451 +469,198 @@
       currentGrade = gradeId;
       document.getElementById('gradeSelect').value = gradeId;
 
-      // Update active schedule text
       const sched = CLASS_SCHEDULE.find(s => s.id === gradeId);
-      if (sched) {
-        document.getElementById('classTimeRangeText').textContent = `${sched.title} (${formatTime(sched.start)} - ${formatTime(sched.end)})`;
-      } else {
-        document.getElementById('classTimeRangeText').textContent = "Prep / Lunch / Out of Class";
-      }
+      document.getElementById('classTimeRangeText').textContent = sched ? `${sched.title} (${formatTime(sched.start)} - ${formatTime(sched.end)})` : "Prep / Lunch / Out of Class";
 
-      // Update Active Tab Styling
-      document.querySelectorAll('.grade-tab').forEach(tab => {
-        tab.className = "grade-tab px-4 py-2 rounded-xl font-bold text-xs transition whitespace-nowrap bg-slate-100 text-slate-600 hover:bg-slate-200";
-      });
+      document.querySelectorAll('.grade-tab').forEach(tab => tab.className = "grade-tab px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 text-slate-600 hover:bg-slate-200");
       const activeTab = document.getElementById(`tab-${gradeId}`);
-      if (activeTab) {
-        activeTab.className = "grade-tab px-4 py-2 rounded-xl font-extrabold text-xs transition whitespace-nowrap bg-purple-600 text-white shadow-md";
-      }
+      if (activeTab) activeTab.className = "grade-tab px-4 py-2 rounded-xl font-extrabold text-xs bg-purple-600 text-white shadow-md";
 
       loadGradeDataToUI(gradeId);
     }
 
     function formatTime(time24) {
       const [h, m] = time24.split(':').map(Number);
-      const period = h >= 12 ? 'PM' : 'AM';
-      const h12 = h % 12 || 12;
-      return `${h12}:${m < 10 ? '0' : ''}${m} ${period}`;
+      return `${h % 12 || 12}:${m < 10 ? '0' : ''}${m} ${h >= 12 ? 'PM' : 'AM'}`;
     }
 
     function loadGradeDataToUI(gradeId) {
-      const data = gradeData[gradeId] || DEFAULT_GRADE_DATA['5th'];
+      if (!gradeData[gradeId]) gradeData[gradeId] = { teks: "", iCan: "", objective: "", nextTime: "", images: [], materials: [] };
+      const data = gradeData[gradeId];
 
       document.getElementById('teksInput').value = data.teks || '';
       document.getElementById('iCanInput').value = data.iCan || '';
       document.getElementById('objectiveInput').value = data.objective || '';
+      document.getElementById('nextTimeInput').value = data.nextTime || '';
 
       renderImages(data.images || []);
       renderMaterials(data.materials || []);
-      renderCleanup(data.cleanup || []);
     }
 
     function saveCurrentGradeData() {
       if (!gradeData[currentGrade]) gradeData[currentGrade] = {};
-
       gradeData[currentGrade].teks = document.getElementById('teksInput').value;
       gradeData[currentGrade].iCan = document.getElementById('iCanInput').value;
       gradeData[currentGrade].objective = document.getElementById('objectiveInput').value;
-
+      gradeData[currentGrade].nextTime = document.getElementById('nextTimeInput').value;
       localStorage.setItem('artLaunchpadData', JSON.stringify(gradeData));
     }
 
     function renderImages(images) {
       const grid = document.getElementById('imageGalleryGrid');
       grid.innerHTML = '';
-
       if (!images || images.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full p-6 text-center border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 space-y-2">
-            <span class="text-3xl">🖼️</span>
-            <p class="text-xs font-semibold">No visual reference images uploaded for this class yet.</p>
-            <p class="text-[11px] text-slate-400">Click <strong>📁 Upload File</strong>, <strong>🔗 Add Web URL</strong>, or drag & drop photos above to add step photos or exemplars.</p>
-          </div>
-        `;
+        grid.innerHTML = `<div class="col-span-full p-6 text-center border-2 border-dashed border-slate-200 rounded-2xl text-slate-400 space-y-2"><p class="text-xs font-semibold">No visuals uploaded.</p></div>`;
         return;
       }
-
       images.forEach((img, idx) => {
-        const card = document.createElement('div');
-        card.className = "group relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-200 shadow-md transition transform hover:-translate-y-1 hover:shadow-xl flex flex-col";
-        
-        card.innerHTML = `
-          <div class="relative h-44 w-full bg-slate-950 overflow-hidden cursor-pointer" onclick="openLightbox(${idx})">
-            <img src="${img.url}" alt="${img.caption || 'Artwork Reference'}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1e293b/f8fafc?text=Image+Unavailable';">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-              <span class="bg-white/90 text-slate-900 font-bold text-xs px-3 py-1.5 rounded-xl shadow-lg backdrop-blur-md flex items-center gap-1">
-                🔍 Expand / Project
-              </span>
+        grid.innerHTML += `
+          <div class="group relative bg-slate-900 rounded-2xl overflow-hidden shadow-md flex flex-col">
+            <div class="relative h-40 w-full bg-slate-950 overflow-hidden cursor-pointer" onclick="openLightbox(${idx})">
+              <img src="${img.url}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
             </div>
-          </div>
-          <div class="p-3 bg-white flex items-center justify-between gap-2 border-t border-slate-100 flex-1">
-            <input type="text" value="${img.caption || ''}" onchange="updateImageCaption(${idx}, this.value)" placeholder="Add caption/step title..." class="text-xs font-bold text-slate-800 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-purple-500 focus:outline-none w-full py-0.5 transition">
-            <button onclick="removeImage(${idx})" title="Delete image" class="text-slate-400 hover:text-rose-600 font-bold text-base p-1 transition shrink-0">
-              🗑️
-            </button>
-          </div>
-        `;
-        grid.appendChild(card);
+            <div class="p-2 bg-white flex items-center justify-between gap-2">
+              <input type="text" value="${img.caption || ''}" onchange="updateImageCaption(${idx}, this.value)" class="text-xs font-bold text-slate-800 bg-transparent w-full outline-none">
+              <button onclick="removeImage(${idx})" class="text-slate-400 hover:text-rose-600 font-bold p-1">🗑️</button>
+            </div>
+          </div>`;
       });
     }
 
-    // Embed via Web Image URL
     function promptAddImageUrl() {
-      const url = prompt("Enter Artwork or Reference Image URL:");
-      if (url && url.trim()) {
-        const caption = prompt("Enter a title or step caption (e.g., Step 1: Outline):") || "Artwork Reference";
+      const url = prompt("Enter Image URL:");
+      if (url) {
         if (!gradeData[currentGrade].images) gradeData[currentGrade].images = [];
-        gradeData[currentGrade].images.push({ url: url.trim(), caption: caption.trim() });
-        saveCurrentGradeData();
-        renderImages(gradeData[currentGrade].images);
+        gradeData[currentGrade].images.push({ url: url.trim(), caption: "Artwork Reference" });
+        saveCurrentGradeData(); renderImages(gradeData[currentGrade].images);
       }
     }
 
-    // Embed via Local File Upload (converts image file to Base64)
-    function handleImageFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      processImageFile(file);
-      event.target.value = ''; // Reset input
-    }
-
-    // Drag & Drop File Handlers
-    function handleDragOver(e) {
-      e.preventDefault();
-      document.getElementById('dropZone').classList.add('border-purple-500', 'bg-purple-50/50');
-    }
-
-    function handleDragLeave(e) {
-      e.preventDefault();
-      document.getElementById('dropZone').classList.remove('border-purple-500', 'bg-purple-50/50');
-    }
-
-    function handleDrop(e) {
-      e.preventDefault();
-      document.getElementById('dropZone').classList.remove('border-purple-500', 'bg-purple-50/50');
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        processImageFile(e.dataTransfer.files[0]);
-      }
-    }
-
+    function handleImageFileUpload(e) { if(e.target.files[0]) processImageFile(e.target.files[0]); e.target.value = ''; }
+    function handleDragOver(e) { e.preventDefault(); }
+    function handleDragLeave(e) { e.preventDefault(); }
+    function handleDrop(e) { e.preventDefault(); if (e.dataTransfer.files[0]) processImageFile(e.dataTransfer.files[0]); }
     function processImageFile(file) {
-      if (!file.type.startsWith('image/')) {
-        alert('Please select a valid image file (PNG, JPG, WEBP, GIF).');
-        return;
-      }
-
       const reader = new FileReader();
-      reader.onload = function(e) {
-        const base64Url = e.target.result;
-        const defaultTitle = file.name.split('.')[0] || "Uploaded Visual";
-        const caption = prompt("Enter a title or step caption for this photo:", defaultTitle) || defaultTitle;
-        
+      reader.onload = (e) => {
         if (!gradeData[currentGrade].images) gradeData[currentGrade].images = [];
-        gradeData[currentGrade].images.push({ url: base64Url, caption: caption });
-        saveCurrentGradeData();
-        renderImages(gradeData[currentGrade].images);
+        gradeData[currentGrade].images.push({ url: e.target.result, caption: "Uploaded Visual" });
+        saveCurrentGradeData(); renderImages(gradeData[currentGrade].images);
       };
       reader.readAsDataURL(file);
     }
 
-    function updateImageCaption(index, newCaption) {
-      if (gradeData[currentGrade] && gradeData[currentGrade].images && gradeData[currentGrade].images[index]) {
-        gradeData[currentGrade].images[index].caption = newCaption;
-        saveCurrentGradeData();
-      }
-    }
+    function updateImageCaption(index, newCaption) { gradeData[currentGrade].images[index].caption = newCaption; saveCurrentGradeData(); }
+    function removeImage(index) { gradeData[currentGrade].images.splice(index, 1); saveCurrentGradeData(); renderImages(gradeData[currentGrade].images); }
 
-    function removeImage(index) {
-      if (gradeData[currentGrade] && gradeData[currentGrade].images) {
-        gradeData[currentGrade].images.splice(index, 1);
-        saveCurrentGradeData();
-        renderImages(gradeData[currentGrade].images);
-      }
-    }
-
-    function openLightbox(index) {
-      const images = gradeData[currentGrade].images;
-      if (!images || images.length === 0) return;
-
-      currentLightboxIdx = index;
-      updateLightboxContent();
-      document.getElementById('lightboxModal').classList.remove('hidden');
-    }
-
+    function openLightbox(index) { currentLightboxIdx = index; updateLightboxContent(); document.getElementById('lightboxModal').classList.remove('hidden'); }
     function updateLightboxContent() {
-      const images = gradeData[currentGrade].images;
-      if (!images || !images[currentLightboxIdx]) return;
-
-      const imgData = images[currentLightboxIdx];
+      const imgData = gradeData[currentGrade].images[currentLightboxIdx];
       document.getElementById('lightboxImage').src = imgData.url;
-      document.getElementById('lightboxCaption').textContent = imgData.caption || `Visual Reference ${currentLightboxIdx + 1}`;
-      document.getElementById('lightboxGradeTitle').textContent = `${currentGrade} Grade Art Projector View (${currentLightboxIdx + 1} of ${images.length})`;
+      document.getElementById('lightboxCaption').textContent = imgData.caption;
     }
-
-    function nextLightboxImage() {
-      const images = gradeData[currentGrade].images;
-      if (!images || images.length === 0) return;
-      currentLightboxIdx = (currentLightboxIdx + 1) % images.length;
-      updateLightboxContent();
-    }
-
-    function prevLightboxImage() {
-      const images = gradeData[currentGrade].images;
-      if (!images || images.length === 0) return;
-      currentLightboxIdx = (currentLightboxIdx - 1 + images.length) % images.length;
-      updateLightboxContent();
-    }
-
-    function closeLightbox() {
-      document.getElementById('lightboxModal').classList.add('hidden');
-    }
+    function nextLightboxImage() { currentLightboxIdx = (currentLightboxIdx + 1) % gradeData[currentGrade].images.length; updateLightboxContent(); }
+    function prevLightboxImage() { currentLightboxIdx = (currentLightboxIdx - 1 + gradeData[currentGrade].images.length) % gradeData[currentGrade].images.length; updateLightboxContent(); }
+    function closeLightbox() { document.getElementById('lightboxModal').classList.add('hidden'); }
 
     function renderMaterials(materials) {
       const container = document.getElementById('materialsList');
       container.innerHTML = '';
-
       materials.forEach((item, idx) => {
-        const row = document.createElement('div');
-        row.className = "flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100 transition";
-        row.innerHTML = `
-          <label class="flex items-center gap-2.5 cursor-pointer flex-1">
-            <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleMaterial(${idx})" class="w-4 h-4 rounded text-blue-600 focus:ring-blue-400 cursor-pointer">
-            <span class="text-xs font-bold text-slate-700 ${item.checked ? 'line-through text-slate-400' : ''}">${item.name}</span>
-          </label>
-          <button onclick="removeMaterial(${idx})" class="text-slate-400 hover:text-rose-500 font-bold text-xs p-1">✕</button>
-        `;
-        container.appendChild(row);
+        container.innerHTML += `
+          <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100">
+            <label class="flex items-center gap-2.5 flex-1 cursor-pointer">
+              <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleMaterial(${idx})" class="w-4 h-4 text-blue-600 rounded">
+              <span class="text-xs font-bold text-slate-700 ${item.checked ? 'line-through text-slate-400' : ''}">${item.name}</span>
+            </label>
+            <button onclick="removeMaterial(${idx})" class="text-slate-400 hover:text-rose-500 font-bold p-1 text-xs">✕</button>
+          </div>`;
       });
     }
 
-    function toggleMaterial(idx) {
-      gradeData[currentGrade].materials[idx].checked = !gradeData[currentGrade].materials[idx].checked;
-      saveCurrentGradeData();
-      renderMaterials(gradeData[currentGrade].materials);
-    }
-
+    function toggleMaterial(idx) { gradeData[currentGrade].materials[idx].checked = !gradeData[currentGrade].materials[idx].checked; saveCurrentGradeData(); renderMaterials(gradeData[currentGrade].materials); }
     function addMaterialPrompt() {
       const name = prompt("Enter new material item:");
-      if (name && name.trim()) {
+      if (name) {
         if (!gradeData[currentGrade].materials) gradeData[currentGrade].materials = [];
         gradeData[currentGrade].materials.push({ name: name.trim(), checked: false });
-        saveCurrentGradeData();
-        renderMaterials(gradeData[currentGrade].materials);
+        saveCurrentGradeData(); renderMaterials(gradeData[currentGrade].materials);
       }
     }
-
-    function removeMaterial(idx) {
-      gradeData[currentGrade].materials.splice(idx, 1);
-      saveCurrentGradeData();
-      renderMaterials(gradeData[currentGrade].materials);
-    }
-
-    function renderCleanup(cleanup) {
-      const container = document.getElementById('cleanupList');
-      container.innerHTML = '';
-
-      cleanup.forEach((item, idx) => {
-        const row = document.createElement('div');
-        row.className = "flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200/80 hover:bg-slate-100 transition";
-        row.innerHTML = `
-          <label class="flex items-center gap-2.5 cursor-pointer flex-1">
-            <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleCleanup(${idx})" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-400 cursor-pointer">
-            <span class="text-xs font-bold text-slate-700 ${item.checked ? 'line-through text-slate-400' : ''}">${item.name}</span>
-          </label>
-          <button onclick="removeCleanup(${idx})" class="text-slate-400 hover:text-rose-500 font-bold text-xs p-1">✕</button>
-        `;
-        container.appendChild(row);
-      });
-    }
-
-    function toggleCleanup(idx) {
-      gradeData[currentGrade].cleanup[idx].checked = !gradeData[currentGrade].cleanup[idx].checked;
-      saveCurrentGradeData();
-      renderCleanup(gradeData[currentGrade].cleanup);
-    }
-
-    function addCleanupPrompt() {
-      const name = prompt("Enter clean-up requirement:");
-      if (name && name.trim()) {
-        if (!gradeData[currentGrade].cleanup) gradeData[currentGrade].cleanup = [];
-        gradeData[currentGrade].cleanup.push({ name: name.trim(), checked: false });
-        saveCurrentGradeData();
-        renderCleanup(gradeData[currentGrade].cleanup);
-      }
-    }
-
-    function removeCleanup(idx) {
-      gradeData[currentGrade].cleanup.splice(idx, 1);
-      saveCurrentGradeData();
-      renderCleanup(gradeData[currentGrade].cleanup);
-    }
+    function removeMaterial(idx) { gradeData[currentGrade].materials.splice(idx, 1); saveCurrentGradeData(); renderMaterials(gradeData[currentGrade].materials); }
 
     function setVoiceLevel(level) {
-      currentVoiceLevel = level;
-      const displays = [
-        { text: "Level 0: Silence", color: "text-emerald-400" },
-        { text: "Level 1: Whisper", color: "text-blue-400" },
-        { text: "Level 2: Table Talk", color: "text-amber-400" },
-        { text: "Level 3: Presenter", color: "text-rose-400" }
-      ];
-
-      const vDisplay = document.getElementById('activeVoiceDisplay');
-      vDisplay.textContent = displays[level].text;
-      vDisplay.className = `text-xs font-black uppercase tracking-wide ${displays[level].color}`;
-
-      // Update button highlights
       for (let i = 0; i <= 3; i++) {
         const btn = document.getElementById(`voiceBtn${i}`);
-        if (i === level) {
-          btn.className = "voice-btn p-2.5 rounded-2xl border-2 border-purple-600 bg-purple-50 flex flex-col items-center justify-center transition text-center shadow-sm";
-        } else {
-          btn.className = "voice-btn p-2.5 rounded-2xl border-2 border-slate-200 flex flex-col items-center justify-center transition text-center hover:border-slate-300";
-        }
+        if (i === level) btn.className = "voice-btn p-2 rounded-xl border-2 border-emerald-400 bg-slate-800 flex flex-col items-center text-center shadow-md scale-105";
+        else btn.className = "voice-btn p-2 rounded-xl border border-slate-700 bg-slate-900 flex flex-col items-center text-center hover:border-slate-500 opacity-70";
       }
     }
 
     function selectTimerPreset(preset) {
-      activePreset = preset;
-      const presets = {
-        warmup: { name: "Warm-Up Timer", seconds: 300 },
-        demo: { name: "Teacher Demo Timer", seconds: 420 },
-        studio: { name: "Studio Work Time", seconds: 1500 },
-        cleanup: { name: "Clean-Up Timer", seconds: 300 }
-      };
-
-      const selected = presets[preset];
-      document.getElementById('activeTimerName').textContent = selected.name;
-      timerSeconds = selected.seconds;
-      timerInitialSeconds = selected.seconds;
-
+      const presets = { warmup: { name: "Warm-Up Timer", seconds: 300 }, demo: { name: "Demo Timer", seconds: 420 }, studio: { name: "Studio Work Time", seconds: 1500 }, cleanup: { name: "Clean-Up Timer", seconds: 300 } };
+      document.getElementById('activeTimerName').textContent = presets[preset].name;
+      timerSeconds = timerInitialSeconds = presets[preset].seconds;
       if (isTimerRunning) pauseTimer();
       updateTimerDisplay();
-
-      // Highlight active button
-      document.querySelectorAll('.timer-preset-btn').forEach(btn => {
-        btn.className = "timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 transition bg-slate-50 text-slate-700 hover:bg-slate-100";
-      });
-      const activeBtn = document.getElementById(`preset${preset.charAt(0).toUpperCase() + preset.slice(1)}`);
-      if (activeBtn) {
-        activeBtn.className = "timer-preset-btn p-2 rounded-xl text-xs font-extrabold border-2 border-purple-600 bg-purple-50 text-purple-700 transition shadow-sm";
-      }
+      
+      document.querySelectorAll('.timer-preset-btn').forEach(btn => btn.className = "timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100");
+      document.getElementById(`preset${preset.charAt(0).toUpperCase() + preset.slice(1)}`).className = "timer-preset-btn p-2 rounded-xl text-xs font-extrabold border-2 border-purple-600 bg-purple-50 text-purple-700 shadow-sm";
     }
 
-    function toggleTimer() {
-      if (isTimerRunning) {
-        pauseTimer();
-      } else {
-        startTimer();
-      }
-    }
-
+    function toggleTimer() { isTimerRunning ? pauseTimer() : startTimer(); }
     function startTimer() {
       if (timerSeconds <= 0) return;
       isTimerRunning = true;
-      document.getElementById('startTimerBtn').innerHTML = '<span>⏸️ Pause Timer</span>';
-      document.getElementById('startTimerBtn').className = 'flex-1 bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md transition flex items-center justify-center gap-2';
-
+      document.getElementById('startTimerBtn').innerHTML = '<span>⏸️ Pause</span>';
+      document.getElementById('startTimerBtn').className = 'flex-1 bg-amber-600 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md flex items-center justify-center';
       timerInterval = setInterval(() => {
-        timerSeconds--;
-        updateTimerDisplay();
-
-        if (timerSeconds <= 0) {
-          pauseTimer();
-          playChimeSound();
-          alertTimerCompletion();
-        }
+        timerSeconds--; updateTimerDisplay();
+        if (timerSeconds <= 0) { pauseTimer(); playChimeSound(); }
       }, 1000);
     }
 
     function pauseTimer() {
-      isTimerRunning = false;
-      clearInterval(timerInterval);
+      isTimerRunning = false; clearInterval(timerInterval);
       document.getElementById('startTimerBtn').innerHTML = '<span>▶️ Start Timer</span>';
-      document.getElementById('startTimerBtn').className = 'flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md transition flex items-center justify-center gap-2';
+      document.getElementById('startTimerBtn').className = 'flex-1 bg-emerald-600 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md flex items-center justify-center';
     }
 
-    function resetTimer() {
-      pauseTimer();
-      timerSeconds = timerInitialSeconds;
-      updateTimerDisplay();
-    }
-
-    function adjustTimer(deltaSec) {
-      timerSeconds = Math.max(0, timerSeconds + deltaSec);
-      updateTimerDisplay();
-    }
-
+    function resetTimer() { pauseTimer(); timerSeconds = timerInitialSeconds; updateTimerDisplay(); }
+    function adjustTimer(deltaSec) { timerSeconds = Math.max(0, timerSeconds + deltaSec); updateTimerDisplay(); }
     function updateTimerDisplay() {
-      const mins = Math.floor(timerSeconds / 60);
-      const secs = timerSeconds % 60;
+      const mins = Math.floor(timerSeconds / 60); const secs = timerSeconds % 60;
       document.getElementById('timerDisplay').textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
     }
 
-    function alertTimerCompletion() {
-      const activeName = document.getElementById('activeTimerName').textContent;
-      setTimeout(() => {
-        alert(`🔔 ${activeName} Finished!`);
-      }, 100);
-    }
-
-    // Web Audio Synthesizer Chime
     function playChimeSound() {
       try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        const ctx = new AudioContext();
-
-        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-        notes.forEach((freq, idx) => {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          osc.type = 'sine';
-          osc.frequency.value = freq;
-
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = ctx.createOscillator(); const gain = ctx.createGain();
+          osc.type = 'sine'; osc.frequency.value = freq;
           gain.gain.setValueAtTime(0, ctx.currentTime + idx * 0.15);
           gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + idx * 0.15 + 0.05);
           gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.15 + 0.8);
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-
-          osc.start(ctx.currentTime + idx * 0.15);
-          osc.stop(ctx.currentTime + idx * 0.15 + 0.8);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + idx * 0.15); osc.stop(ctx.currentTime + idx * 0.15 + 0.8);
         });
-      } catch (e) {
-        console.log("Audio play blocked or unsupported");
-      }
+      } catch (e) {}
     }
 
-    function openNamePicker() {
-      document.getElementById('namePickerModal').classList.remove('hidden');
-    }
-
-    function closeNamePicker() {
-      document.getElementById('namePickerModal').classList.add('hidden');
-    }
-
+    function openNamePicker() { document.getElementById('namePickerModal').classList.remove('hidden'); }
+    function closeNamePicker() { document.getElementById('namePickerModal').classList.add('hidden'); }
     function pickRandomStudent() {
-      const rosterText = document.getElementById('rosterInput').value;
-      const names = rosterText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      const names = document.getElementById('rosterInput').value.split('\n').map(n => n.trim()).filter(n => n.length > 0);
       const box = document.getElementById('selectedNameBox');
-
-      if (names.length === 0) {
-        box.innerHTML = '<span class="text-base font-bold">Please enter student names above!</span>';
-        return;
-      }
-
-      // Quick shuffle animation
+      if (names.length === 0) return box.innerHTML = '<span class="text-base font-bold">Enter names!</span>';
+      
       let count = 0;
       const interval = setInterval(() => {
-        const temp = names[Math.floor(Math.random() * names.length)];
-        box.innerHTML = `<span class="text-2xl font-extrabold text-amber-300">${temp}</span>`;
-        count++;
-        if (count > 12) {
+        box.innerHTML = `<span class="text-2xl font-extrabold text-amber-300">${names[Math.floor(Math.random() * names.length)]}</span>`;
+        if (++count > 12) {
           clearInterval(interval);
-          const winner = names[Math.floor(Math.random() * names.length)];
-          box.innerHTML = `<span class="text-3xl font-black text-amber-300 animate-bounce">⭐ ${winner} ⭐</span>`;
+          box.innerHTML = `<span class="text-3xl font-black text-amber-300 animate-bounce">⭐ ${names[Math.floor(Math.random() * names.length)]} ⭐</span>`;
           playChimeSound();
         }
       }, 80);
