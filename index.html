@@ -13,9 +13,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- GridStack CSS & JS for Draggable/Resizable Widgets -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/9.3.0/gridstack.min.css" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/9.3.0/gridstack-all.js"></script>
+  <!-- GridStack CSS & JS for Draggable/Resizable Widgets (Corrected Links) -->
+  <link href="https://cdn.jsdelivr.net/npm/gridstack@10.1.1/dist/gridstack.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/gridstack@10.1.1/dist/gridstack-all.js"></script>
 
   <script>
     tailwind.config = {
@@ -49,7 +49,6 @@
       display: flex;
       flex-direction: column;
     }
-    /* Hide resize handle unless hovering to make it look cleaner */
     .ui-resizable-handle { opacity: 0; transition: opacity 0.2s; }
     .grid-stack-item:hover .ui-resizable-handle { opacity: 1; }
   </style>
@@ -60,7 +59,6 @@
   <header id="topHeader" class="bg-slate-900 text-white shadow-lg border-b border-slate-800 sticky top-0 z-40 transition-colors duration-500">
     <div class="layout-container max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4 transition-all duration-300">
       
-      <!-- Brand & Active Class Title -->
       <div class="flex items-center gap-3">
         <div class="p-2.5 bg-gradient-to-tr from-purple-600 to-amber-400 rounded-2xl text-2xl shadow-md">🎨</div>
         <div>
@@ -72,7 +70,6 @@
         </div>
       </div>
 
-      <!-- Real-Time Clock -->
       <div class="flex items-center gap-3">
         <div class="bg-slate-800/90 border border-slate-700/80 px-3.5 py-1.5 rounded-2xl flex items-center gap-2 shadow-inner">
           <span class="text-amber-400 text-sm">🕒</span>
@@ -83,7 +80,6 @@
         </div>
       </div>
 
-      <!-- Controls: Grade Selector, Auto Toggle, Widescreen Toggle -->
       <div class="flex items-center gap-2">
         <select id="gradeSelect" onchange="handleManualGradeChange(this.value)" class="bg-slate-800 text-white font-bold text-sm px-3 py-2 rounded-xl border border-slate-700 focus:ring-2 focus:ring-amber-400 focus:outline-none transition cursor-pointer">
           <option value="5th">5th (8:30 - 9:20)</option>
@@ -103,7 +99,7 @@
     </div>
   </header>
 
-  <!-- VOICE LEVEL BAR (BLACK) -->
+  <!-- VOICE LEVEL BAR -->
   <div class="bg-black text-white border-b border-slate-800 relative z-30 shadow-md">
     <div class="layout-container max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center gap-4 transition-all duration-300">
       <div class="flex items-center gap-2 min-w-max">
@@ -167,7 +163,7 @@
             <span class="text-amber-400 text-lg">⠿</span>
             <span class="text-amber-900 font-black text-sm uppercase tracking-wider">✨ "I Can" Statement</span>
           </div>
-          <textarea id="iCanInput" oninput="saveCurrentGradeData()" class="w-full flex-1 mt-2 bg-white/60 border border-amber-200/50 rounded-xl px-3 py-2 font-display font-bold text-slate-900 text-lg md:text-xl focus:ring-2 focus:ring-amber-400 focus:outline-none transition resize-none" placeholder="I can create depth using perspective!"></textarea>
+          <textarea id="iCanInput" oninput="saveCurrentGradeData()" class="w-full flex-1 mt-2 bg-transparent rounded-xl px-3 py-2 font-display font-bold text-slate-900 text-lg md:text-xl focus:ring-2 focus:ring-amber-400 focus:outline-none transition resize-none" placeholder="I can create depth using perspective!"></textarea>
         </div>
       </div>
       
@@ -215,10 +211,6 @@
               <span class="p-2 bg-blue-100 text-blue-700 rounded-xl text-xl">✅</span>
               <h2 class="font-bold font-display text-slate-800 text-lg">What Needs to be Done Today</h2>
             </div>
-            <div class="flex items-center gap-1 cursor-default">
-              <button onclick="adjustFontSize('objectiveInput', -2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A-</button>
-              <button onclick="adjustFontSize('objectiveInput', 2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A+</button>
-            </div>
           </div>
           <textarea id="objectiveInput" style="font-size: 16px;" oninput="saveCurrentGradeData()" class="w-full flex-1 mt-3 p-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-medium focus:ring-2 focus:ring-blue-400 focus:outline-none transition resize-none" placeholder="1. Pencil sketch outline&#10;2. Paint color wash&#10;3. Add details"></textarea>
         </div>
@@ -232,10 +224,6 @@
               <span class="text-slate-400 text-lg">⠿</span>
               <span class="p-2 bg-orange-100 text-orange-700 rounded-xl text-xl">📖</span>
               <h2 class="font-bold font-display text-slate-800 text-lg">Vocabulary</h2>
-            </div>
-            <div class="flex items-center gap-1 cursor-default">
-              <button onclick="adjustFontSize('vocabInput', -2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A-</button>
-              <button onclick="adjustFontSize('vocabInput', 2)" class="px-2.5 py-1 bg-slate-100 border border-slate-200 rounded-lg text-sm font-bold text-slate-600 hover:bg-slate-200">A+</button>
             </div>
           </div>
           <textarea id="vocabInput" style="font-size: 16px;" oninput="saveCurrentGradeData()" class="w-full flex-1 mt-3 p-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-medium focus:ring-2 focus:ring-orange-400 focus:outline-none transition resize-none" placeholder="E.g., Horizon Line, Vanishing Point..."></textarea>
@@ -298,7 +286,7 @@
 
   </main>
 
-  <!-- LIGHTBOX & NAME PICKER MODALS KEEP ORIGINAL STRUCTURE -->
+  <!-- LIGHTBOX & NAME PICKER MODALS -->
   <div id="lightboxModal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-between p-4 hidden transition-all">
     <div class="w-full max-w-6xl flex items-center justify-between text-white">
       <div class="flex items-center gap-3">
@@ -405,7 +393,6 @@
       });
     };
 
-    // WIDESCREEN TOGGLE FUNCTION
     function toggleWidescreen() {
       isWidescreen = !isWidescreen;
       const containers = document.querySelectorAll('.layout-container');
@@ -419,11 +406,9 @@
           el.classList.remove('w-full');
         }
       });
-      // Force grid to recalculate positions on resize
       setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
     }
 
-    // FONT SIZE ADJUSTMENT FUNCTION
     function adjustFontSize(elementId, delta) {
       const el = document.getElementById(elementId);
       const currentSize = parseFloat(window.getComputedStyle(el).fontSize);
@@ -635,4 +620,67 @@
       if (isTimerRunning) pauseTimer();
       updateTimerDisplay();
       
-      document.querySelectorAll('.timer-preset-btn').forEach(btn => btn.className = "timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-
+      document.querySelectorAll('.timer-preset-btn').forEach(btn => btn.className = "timer-preset-btn p-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100");
+      document.getElementById(`preset${preset.charAt(0).toUpperCase() + preset.slice(1)}`).className = "timer-preset-btn p-2 rounded-xl text-xs font-extrabold border-2 border-purple-600 bg-purple-50 text-purple-700 shadow-sm";
+    }
+
+    function toggleTimer() { isTimerRunning ? pauseTimer() : startTimer(); }
+    function startTimer() {
+      if (timerSeconds <= 0) return;
+      isTimerRunning = true;
+      document.getElementById('startTimerBtn').innerHTML = '<span>⏸️ Pause</span>';
+      document.getElementById('startTimerBtn').className = 'flex-1 bg-amber-600 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md flex items-center justify-center';
+      timerInterval = setInterval(() => {
+        timerSeconds--; updateTimerDisplay();
+        if (timerSeconds <= 0) { pauseTimer(); playChimeSound(); }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      isTimerRunning = false; clearInterval(timerInterval);
+      document.getElementById('startTimerBtn').innerHTML = '<span>▶️ Start Timer</span>';
+      document.getElementById('startTimerBtn').className = 'flex-1 bg-emerald-600 text-white font-bold py-3 px-4 rounded-2xl text-base shadow-md flex items-center justify-center';
+    }
+
+    function resetTimer() { pauseTimer(); timerSeconds = timerInitialSeconds; updateTimerDisplay(); }
+    function adjustTimer(deltaSec) { timerSeconds = Math.max(0, timerSeconds + deltaSec); updateTimerDisplay(); }
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60); const secs = timerSeconds % 60;
+      document.getElementById('timerDisplay').textContent = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function playChimeSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+          const osc = ctx.createOscillator(); const gain = ctx.createGain();
+          osc.type = 'sine'; osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0, ctx.currentTime + idx * 0.15);
+          gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + idx * 0.15 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.15 + 0.8);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + idx * 0.15); osc.stop(ctx.currentTime + idx * 0.15 + 0.8);
+        });
+      } catch (e) {}
+    }
+
+    function openNamePicker() { document.getElementById('namePickerModal').classList.remove('hidden'); }
+    function closeNamePicker() { document.getElementById('namePickerModal').classList.add('hidden'); }
+    function pickRandomStudent() {
+      const names = document.getElementById('rosterInput').value.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      const box = document.getElementById('selectedNameBox');
+      if (names.length === 0) return box.innerHTML = '<span class="text-base font-bold">Enter names!</span>';
+      
+      let count = 0;
+      const interval = setInterval(() => {
+        box.innerHTML = `<span class="text-2xl font-extrabold text-amber-300">${names[Math.floor(Math.random() * names.length)]}</span>`;
+        if (++count > 12) {
+          clearInterval(interval);
+          box.innerHTML = `<span class="text-3xl font-black text-amber-300 animate-bounce">⭐ ${names[Math.floor(Math.random() * names.length)]} ⭐</span>`;
+          playChimeSound();
+        }
+      }, 80);
+    }
+  </script>
+</body>
+</html>
